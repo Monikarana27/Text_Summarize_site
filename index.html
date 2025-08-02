@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Article Summarizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📚 Smart Article Summarizer</h1>
+            <p class="subtitle">Transform lengthy articles into concise summaries using AI</p>
+            <div class="problem-badge">
+                💡 <strong>Problem Solved:</strong> Information overload when reading long articles
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="text">✍️ Paste Text</button>
+                    <button class="tab-btn" data-tab="url">🔗 URL Input</button>
+                    <button class="tab-btn" data-tab="file">📄 Upload File</button>
+                </div>
+
+                <div id="text-tab" class="tab-content active">
+                    <textarea id="articleText" placeholder="Paste your long article, research paper, or any text you want to summarize...
+
+Try pasting:
+• News articles
+• Research papers
+• Blog posts
+• Documentation
+• Reports
+
+Minimum 200 characters for best results."></textarea>
+                    <div class="char-counter">
+                        <span id="charCount">0</span> characters | <span id="wordCount">0</span> words
+                    </div>
+                </div>
+
+                <div id="url-tab" class="tab-content">
+                    <input type="url" id="urlInput" placeholder="https://example.com/article">
+                    <button id="fetchBtn" class="fetch-btn">📥 Fetch Article</button>
+                    <div id="fetchStatus" class="fetch-status"></div>
+                </div>
+
+                <div id="file-tab" class="tab-content">
+                    <div class="file-upload">
+                        <input type="file" id="fileInput" accept=".txt,.md" style="display: none;">
+                        <button id="uploadBtn" class="upload-btn">📁 Choose File (.txt, .md)</button>
+                        <div id="fileName" class="file-name"></div>
+                    </div>
+                </div>
+
+                <div class="summary-options">
+                    <div class="option-group">
+                        <label for="summaryLength">Summary Length:</label>
+                        <select id="summaryLength">
+                            <option value="short">Short (1-2 sentences)</option>
+                            <option value="medium" selected>Medium (3-5 sentences)</option>
+                            <option value="long">Long (6-8 sentences)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="summaryStyle">Focus Style:</label>
+                        <select id="summaryStyle">
+                            <option value="general" selected>General Summary</option>
+                            <option value="key-points">Key Points</option>
+                            <option value="conclusion">Main Conclusion</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="summarizeBtn" class="summarize-btn">
+                    <span class="btn-text">🤖 Generate Smart Summary</span>
+                    <span class="btn-loading" style="display: none;">
+                        <div class="spinner"></div>
+                        Processing...
+                    </span>
+                </button>
+            </div>
+
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="results-header">
+                    <h2>📋 Summary Results</h2>
+                    <div class="results-stats">
+                        <span id="compressionRatio">Compression: 0%</span>
+                        <span id="readingTime">Reading time: 0 min</span>
+                    </div>
+                </div>
+
+                <div class="summary-container">
+                    <div class="summary-card">
+                        <div class="card-header">
+                            <h3>✨ AI Summary</h3>
+                            <div class="copy-actions">
+                                <button id="copyBtn" class="copy-btn">📋 Copy</button>
+                                <button id="shareBtn" class="share-btn">🔗 Share</button>
+                            </div>
+                        </div>
+                        <div id="summaryResult" class="summary-text"></div>
+                    </div>
+
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <h4>📊 Text Analysis</h4>
+                            <div class="insight-content">
+                                <div class="stat">
+                                    <span class="stat-label">Original:</span>
+                                    <span id="originalStats">0 words, 0 chars</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Summary:</span>
+                                    <span id="summaryStats">0 words, 0 chars</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card">
+                            <h4>⚡ Performance</h4>
+                            <div class="insight-content">
+                                <div class="stat">
+                                    <span class="stat-label">Processing Time:</span>
+                                    <span id="processingTime">0.0s</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Model Used:</span>
+                                    <span>Hugging Face BART</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h3>🚀 Try These Examples</h3>
+            <div class="examples-grid">
+                <button class="example-card" data-example="news">
+                    <div class="example-icon">📰</div>
+                    <div class="example-title">News Article</div>
+                    <div class="example-desc">Sample technology news</div>
+                </button>
+                <button class="example-card" data-example="research">
+                    <div class="example-icon">🔬</div>
+                    <div class="example-title">Research Paper</div>
+                    <div class="example-desc">Academic abstract</div>
+                </button>
+                <button class="example-card" data-example="blog">
+                    <div class="example-icon">✍️</div>
+                    <div class="example-title">Blog Post</div>
+                    <div class="example-desc">Tech tutorial content</div>
+                </button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="project-info">
+                <h4>🛠️ Project Features</h4>
+                <ul>
+                    <li>Multiple input methods (text, URL, file upload)</li>
+                    <li>Customizable summary length and style</li>
+                    <li>Real-time text analysis and statistics</li>
+                    <li>Copy and share functionality</li>
+                    <li>Responsive design with modern UI</li>
+                    <li>Built with vanilla JavaScript + Hugging Face API</li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
